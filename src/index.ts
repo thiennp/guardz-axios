@@ -2,7 +2,6 @@
 // Core Type Definitions
 // ===============================
 export * from './types/axios-types';
-export * from './types/status-types';
 
 // ===============================
 // Type Guards

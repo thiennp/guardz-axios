@@ -1,5 +1,6 @@
-import { safeGet, safeRequest, safe, createSafeApiContext, Status } from '../src/utils';
+import { safeGet, safeRequest, safe, createSafeApiContext } from '../src/index';
 import { isType, isString, isNumber, isBoolean } from 'guardz';
+import { Status } from '../src/types/status-types';
 
 // Define data structure
 interface User {
@@ -25,7 +26,7 @@ async function demonstrateAPIPatterns() {
   const getUserSafely = safeGet({
     guard: isUser,
     tolerance: true,
-    onTypeMismatch: (error) => console.warn(`⚠️  Warning: ${error}`)
+    onError: (error) => console.warn(`⚠️  Warning: ${error}`)
   });
 
   const userResult = await getUserSafely('https://jsonplaceholder.typicode.com/users/1');

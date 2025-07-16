@@ -1,5 +1,6 @@
-import { safeGet, safePost, Status } from '../src/utils';
+import { safeGet, safePost } from '../src/utils/safe-axios';
 import { isType, isString, isNumber, isBoolean } from 'guardz';
+import { Status } from '../src/types/status-types';
 
 // Define your data structure
 interface User {
@@ -73,7 +74,7 @@ async function toleranceModeExample() {
   const result = await safeGet({
     guard: isUser,
     tolerance: true,
-    onTypeMismatch: (error, context) => {
+    onError: (error, context) => {
       console.warn(`Validation warning: ${error}`);
     }
   })('/users/1');

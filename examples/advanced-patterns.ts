@@ -22,8 +22,8 @@ import {
   type RetryConfig,
   createTypedSafeGet,
   createTypedSafePost,
-  Status,
-} from '../src/utils';
+} from '../src/utils/safe-axios';
+import { Status } from '../src/types/status-types';
 
 import { isType, isString, isNumber, isBoolean, isArrayWithEachItem } from 'guardz';
 
@@ -88,7 +88,7 @@ async function pattern1_CurriedFunctions() {
   const getUserSafely = safeGet({
     guard: isUser,
     tolerance: false,
-    onTypeMismatch: (error, context) => {
+    onError: (error, context) => {
       console.error(`❌ Failed to load user from ${context.url}: ${error}`);
     },
     retry: {
@@ -101,7 +101,7 @@ async function pattern1_CurriedFunctions() {
   const createUserSafely = safePost({
     guard: isUser,
     tolerance: false,
-    onTypeMismatch: (error, context) => {
+    onError: (error, context) => {
       console.error(`❌ Failed to create user: ${error}`);
     }
   });
@@ -154,7 +154,7 @@ async function pattern2_ConfigurationFirst() {
       guard: isUsersArray,
       tolerance: true,
       timeout: 5000,
-      onTypeMismatch: (error, context) => {
+      onError: (error, context) => {
         console.warn(`⚠️ Validation issue in ${context.type}: ${error}`);
       },
       retry: {
@@ -200,13 +200,13 @@ async function pattern3_FluentBuilder() {
         'Accept': 'application/json',
         'Authorization': 'Bearer fake-token'
       })
-              .onTypeMismatch((error, context) => {
-          if (context.type === 'validation') {
-            console.warn(`⚠️ Data validation issue: ${error}`);
-          } else {
-            console.error(`❌ ${context.type} error: ${error}`);
-          }
-        })
+      .onError((error, context) => {
+        if (context.type === 'validation') {
+          console.warn(`⚠️ Data validation issue: ${error}`);
+        } else {
+          console.error(`❌ ${context.type} error: ${error}`);
+        }
+      })
       .retry({
         attempts: 3,
         delay: 1000,
