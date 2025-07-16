@@ -19,8 +19,12 @@
     "response",
     "error-handling"
   ],
-  "author": "guardz-axios",
+  "author": "Thien Nguyen",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thiennp/guardz-axios/issues"
+  },
+  "homepage": "https://github.com/thiennp/guardz-axios#readme",
   "peerDependencies": {
     "axios": "^1.0.0",
     "guardz": "^1.4.1"
@@ -39,4 +43,4 @@
   "files": [
     "dist"
   ]
-} 
+}
