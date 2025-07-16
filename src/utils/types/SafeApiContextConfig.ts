@@ -11,6 +11,6 @@ export interface SafeApiContextConfig {
   headers?: Record<string, string>;
   defaultTolerance?: boolean;
   defaultRetry?: RetryConfig;
-  onError?: (error: string, context: ErrorContext) => void;
+  onTypeMismatch?: (error: string, context: ErrorContext) => void;
   axiosInstance?: AxiosInstance;
 } 

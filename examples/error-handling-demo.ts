@@ -1,5 +1,6 @@
-import { safeGet, safePost, safeRequest, Status } from '../src/utils';
+import { safeGet, safePost, safeRequest } from '../src/utils/safe-axios';
 import { isType, isString, isNumber, isBoolean, isArrayWithEachItem } from 'guardz';
+import { Status } from '../src/types/status-types';
 
 // Define complex data structures to demonstrate detailed error messages
 interface User {

@@ -326,7 +326,7 @@ describe('Professional Safe Axios API', () => {
         baseURL: 'https://api.example.com',
         timeout: 5000,
         defaultTolerance: true,
-        onError: onTypeMismatch,
+        onTypeMismatch,
       });
 
       const result = await api.get('/users/1', { guard: isUser });
