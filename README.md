@@ -21,16 +21,9 @@ Guardz Axios transforms your HTTP requests into type-safe operations that automa
 npm install guardz-axios guardz axios
 ```
 
-## Guardz 1.7.0+ Features
+## Features
 
-This library is built on top of [guardz 1.7.0+](https://github.com/thiennp/guardz) and leverages its latest features:
-
-- **Enhanced Type Guards**: Improved `isType`, `isOneOf`, and other type guards for better validation
-- **Generic Type Guards**: Use `isGeneric` for creating reusable validation patterns
-- **Asserted Type Guards**: Use `isAsserted` for external library types without runtime validation
-- **Structured Error Handling**: Detailed, field-specific error messages with property paths
-- **Tolerance Mode**: Graceful handling of validation failures with `guardWithTolerance`
-- **Composite Type Guards**: Support for intersection types and inheritance patterns
+This library is built on top of [guardz 1.7.0+](https://github.com/thiennp/guardz) and provides:
 
 ## Quick Start
 
@@ -193,29 +186,9 @@ if (result.status === Status.SUCCESS) {
 }
 ```
 
-### Structured Error Handling
+### Error Handling
 
-Guardz 1.7.0+ provides detailed, field-specific error messages:
-
-```typescript
-import { isType, isString, isNumber } from 'guardz';
-
-const isUser = isType<User>({
-  id: isNumber,
-  name: isString,
-  email: isString,
-});
-
-const errors: string[] = [];
-const config = {
-  identifier: 'user',
-  callbackOnError: (error: string) => errors.push(error),
-};
-
-const invalidUser = { id: 'not-a-number', name: 'John', email: 'invalid-email' };
-const result = isUser(invalidUser, config);
-// errors contains: ['Expected user.id ("not-a-number") to be "number"']
-```
+The library provides detailed error messages and multiple error handling strategies:
 
 ### Best Practices for Error Handling
 
@@ -256,16 +229,16 @@ const result = isUser(invalidUser, config);
    }
    ```
 
-4. **Leverage structured error messages**:
+4. **Use detailed error messages**:
    ```typescript
    const result = await safeGet({ 
      guard: isUser,
      onValidationError: (errors) => {
        errors.forEach(error => {
          console.error(`Validation failed: ${error}`);
-         // Log to monitoring service
        });
      }
+   })('/users/1');
    ```
 
 ## API Patterns
@@ -429,51 +402,18 @@ if (result.status === Status.SUCCESS) {
 }
 ```
 
-### Generic Type Guards
+### Type Guards
 
 ```typescript
-import { isGeneric, isString, isNumber, isType } from 'guardz';
-
-// Create reusable type guards with semantic meaning
-const isUserId = isGeneric(isNumber);
-const isEmail = isGeneric(isString);
-const isName = isGeneric(isString);
+import { isType, isString, isNumber } from 'guardz';
 
 const isUser = isType<User>({
-  id: isUserId,
-  name: isName,
-  email: isEmail,
+  id: isNumber,
+  name: isString,
+  email: isString,
 });
 
 const result = await safeGet({ guard: isUser })('/users/1');
-
-if (result.status === Status.SUCCESS) {
-  console.log('User:', result.data);
-}
-```
-
-### Asserted Type Guards
-
-For external library types without runtime validation:
-
-```typescript
-import { isAsserted } from 'guardz';
-
-// For external API types
-interface ExternalApiResponse {
-  id: string;
-  data: unknown;
-}
-
-const isExternalResponse = isAsserted<ExternalApiResponse>;
-
-const result = await safeGet({ 
-  guard: isExternalResponse 
-})('/external-api/data');
-
-if (result.status === Status.SUCCESS) {
-  console.log('External data:', result.data);
-}
 ```
 
 ## Examples
