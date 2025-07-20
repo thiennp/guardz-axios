@@ -1,6 +1,6 @@
 {
   "name": "guardz-axios",
-  "version": "1.8.0-0",
+  "version": "1.9.0-0",
   "description": "Type-safe HTTP client built on top of Axios with runtime validation using guardz. Part of the guardz ecosystem for comprehensive TypeScript type safety.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,7 +47,7 @@
   },
   "peerDependencies": {
     "axios": "^1.0.0",
-    "guardz": "^1.8.0"
+    "guardz": "^1.9.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
@@ -57,7 +57,7 @@
     "axios": "^1.6.0",
     "eslint": "^8.0.0",
     "eslint-plugin-jest": "^27.9.0",
-    "guardz": "^1.8.0",
+    "guardz": "^1.9.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.0",
