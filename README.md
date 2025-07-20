@@ -1,5 +1,7 @@
 # Guardz Axios
 
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Support%20this%20project-red?style=for-the-badge&logo=github)](https://github.com/sponsors/thiennp)
+
 A type-safe HTTP client built on top of Axios with runtime validation using [guardz](https://github.com/thiennp/guardz). This library provides a robust, type-safe way to make HTTP requests with automatic runtime validation of responses.
 
 ## What This Library Does
