@@ -21,6 +21,24 @@ Guardz Axios transforms your HTTP requests into type-safe operations that automa
 npm install guardz-axios guardz axios
 ```
 
+## Guardz Ecosystem
+
+This library is part of the **Guardz ecosystem** - a comprehensive TypeScript type guard solution:
+
+- **[guardz](https://www.npmjs.com/package/guardz)** - Core type guard library with 50+ built-in guards
+- **[guardz-generator](https://www.npmjs.com/package/guardz-generator)** - Automatically generate type guards from TypeScript interfaces
+- **[guardz-axios](https://www.npmjs.com/package/guardz-axios)** - Type-safe HTTP client with runtime validation (this package)
+- **[guardz-event](https://www.npmjs.com/package/guardz-event)** - Type-safe event handling with runtime validation
+
+### Generate Type Guards Automatically
+
+Use [guardz-generator](https://www.npmjs.com/package/guardz-generator) to automatically create type guards from your TypeScript interfaces:
+
+```bash
+npm install guardz-generator
+npx guardz-generator generate "src/**/*.ts"
+```
+
 ## Features
 
 This library is built on top of [guardz 1.7.0+](https://github.com/thiennp/guardz) and provides:
@@ -416,6 +434,8 @@ const isUser = isType<User>({
 const result = await safeGet({ guard: isUser })('/users/1');
 ```
 
+> **💡 Tip**: Use [guardz-generator](https://www.npmjs.com/package/guardz-generator) to automatically generate type guards from your TypeScript interfaces instead of writing them manually!
+
 ## Examples
 
 See the [examples](./examples) directory for complete working examples:
@@ -432,7 +452,7 @@ Support this project by becoming a sponsor:
 - [GitHub Sponsors](https://github.com/thiennp)
 - [Open Collective](https://opencollective.com/guardz-axios)
 - [Ko-fi](https://ko-fi.com/nguyenphongthien)
-- [Tidelift](https://tidelift.com/funding/github/npm/guardz)
+- [Tidelift](https://tidelift.com/funding/github/npm/guardz-axios)
 - [Liberapay](https://liberapay.com/~1889616)
 - [IssueHunt](https://issuehunt.io/r/nguyenphongthien)
 - [Custom Sponsorship](https://github.com/thiennp/guardz-axios#sponsors)

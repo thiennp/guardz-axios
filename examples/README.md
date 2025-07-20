@@ -2,6 +2,14 @@
 
 This directory contains examples demonstrating how to use guardz-axios effectively.
 
+## Guardz Ecosystem
+
+This library is part of the **Guardz ecosystem**:
+- **[guardz](https://www.npmjs.com/package/guardz)** - Core type guard library
+- **[guardz-generator](https://www.npmjs.com/package/guardz-generator)** - Auto-generate type guards from TypeScript interfaces
+- **[guardz-axios](https://www.npmjs.com/package/guardz-axios)** - Type-safe HTTP client (this package)
+- **[guardz-event](https://www.npmjs.com/package/guardz-event)** - Type-safe event handling
+
 ## Available Examples
 
 ### `quick-demo.ts`

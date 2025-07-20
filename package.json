@@ -1,7 +1,7 @@
 {
   "name": "guardz-axios",
   "version": "1.7.0-1",
-  "description": "Type guards for Axios responses and errors using guardz",
+  "description": "Type-safe HTTP client built on top of Axios with runtime validation using guardz",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -29,6 +29,10 @@
     "url": "https://github.com/thiennp/guardz-axios/issues"
   },
   "homepage": "https://github.com/thiennp/guardz-axios#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thiennp/guardz-axios.git"
+  },
   "peerDependencies": {
     "axios": "^1.0.0",
     "guardz": "^1.7.0"
