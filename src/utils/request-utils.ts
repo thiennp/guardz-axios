@@ -206,9 +206,7 @@ export function isSuccessResult<T>(
  * @param result - Request result to check
  * @returns True if the result is an error
  */
-export function isErrorResult<T>(
-  result: RequestResult<T>,
-): result is {
+export function isErrorResult<T>(result: RequestResult<T>): result is {
   status: RequestStatus.ERROR;
   code: number;
   message: string;

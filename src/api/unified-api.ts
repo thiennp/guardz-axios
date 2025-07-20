@@ -243,9 +243,7 @@ export class UnifiedApi {
     return result.status === RequestStatus.SUCCESS;
   }
 
-  isError<T>(
-    result: RequestResult<T>,
-  ): result is {
+  isError<T>(result: RequestResult<T>): result is {
     status: RequestStatus.ERROR;
     code: number;
     message: string;
