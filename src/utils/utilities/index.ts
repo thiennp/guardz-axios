@@ -1,2 +1,2 @@
-export * from './createTypedSafeGet';
-export * from './createTypedSafePost'; 
+export * from "./createTypedSafeGet";
+export * from "./createTypedSafePost";

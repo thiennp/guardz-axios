@@ -1,8 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { guardWithTolerance } from 'guardz';
-import type { TypeGuardFn, TypeGuardFnConfig } from 'guardz';
-import { Status } from '../types/status-types';
-import { isAxiosResponse } from '../guards/axios-response-guards';
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { guardWithTolerance } from "guardz";
+import type { TypeGuardFn, TypeGuardFnConfig } from "guardz";
+import { Status } from "../types/status-types";
+import { isAxiosResponse } from "../guards/axios-response-guards";
 
 export type ApiResult<T> =
   | { status: Status.SUCCESS; data: T }
@@ -29,7 +29,7 @@ export interface SafeRequestConfig<T> {
 }
 
 export interface ErrorContext {
-  type: 'validation' | 'network' | 'timeout' | 'unknown';
+  type: "validation" | "network" | "timeout" | "unknown";
   url: string;
   method: string;
   statusCode?: number;
@@ -38,60 +38,93 @@ export interface ErrorContext {
 
 /**
  * Pattern 1: Curried Function (Google/Ramda style)
- * Usage: const getUserSafely = safeGet({ guard: isUser }); 
+ * Usage: const getUserSafely = safeGet({ guard: isUser });
  *        const result = await getUserSafely('https://api.example.com/users/1');
  *        // result is { status: Status.SUCCESS, data: User } | { status: Status.ERROR, data: AxiosError }
  */
 export function safeGet<T>(config: SafeRequestConfig<T>) {
-  return async (url: string, axiosConfig?: AxiosRequestConfig): Promise<ApiResult<T>> => {
-    return executeRequest({
-      ...axiosConfig,
-      url,
-      method: 'GET'
-    }, config);
+  return async (
+    url: string,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<ApiResult<T>> => {
+    return executeRequest(
+      {
+        ...axiosConfig,
+        url,
+        method: "GET",
+      },
+      config,
+    );
   };
 }
 
 export function safePost<T>(config: SafeRequestConfig<T>) {
-  return async (url: string, data?: any, axiosConfig?: AxiosRequestConfig): Promise<ApiResult<T>> => {
-    return executeRequest({
-      ...axiosConfig,
-      url,
-      method: 'POST',
-      data
-    }, config);
+  return async (
+    url: string,
+    data?: any,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<ApiResult<T>> => {
+    return executeRequest(
+      {
+        ...axiosConfig,
+        url,
+        method: "POST",
+        data,
+      },
+      config,
+    );
   };
 }
 
 export function safePut<T>(config: SafeRequestConfig<T>) {
-  return async (url: string, data?: any, axiosConfig?: AxiosRequestConfig): Promise<ApiResult<T>> => {
-    return executeRequest({
-      ...axiosConfig,
-      url,
-      method: 'PUT',
-      data
-    }, config);
+  return async (
+    url: string,
+    data?: any,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<ApiResult<T>> => {
+    return executeRequest(
+      {
+        ...axiosConfig,
+        url,
+        method: "PUT",
+        data,
+      },
+      config,
+    );
   };
 }
 
 export function safePatch<T>(config: SafeRequestConfig<T>) {
-  return async (url: string, data?: any, axiosConfig?: AxiosRequestConfig): Promise<ApiResult<T>> => {
-    return executeRequest({
-      ...axiosConfig,
-      url,
-      method: 'PATCH',
-      data
-    }, config);
+  return async (
+    url: string,
+    data?: any,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<ApiResult<T>> => {
+    return executeRequest(
+      {
+        ...axiosConfig,
+        url,
+        method: "PATCH",
+        data,
+      },
+      config,
+    );
   };
 }
 
 export function safeDelete<T>(config: SafeRequestConfig<T>) {
-  return async (url: string, axiosConfig?: AxiosRequestConfig): Promise<ApiResult<T>> => {
-    return executeRequest({
-      ...axiosConfig,
-      url,
-      method: 'DELETE'
-    }, config);
+  return async (
+    url: string,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<ApiResult<T>> => {
+    return executeRequest(
+      {
+        ...axiosConfig,
+        url,
+        method: "DELETE",
+      },
+      config,
+    );
   };
 }
 
@@ -100,17 +133,28 @@ export function safeDelete<T>(config: SafeRequestConfig<T>) {
  * Usage: const result = await safeRequest({ url: '/users/1', method: 'GET', guard: isUser });
  */
 export async function safeRequest<T>(
-  requestConfig: AxiosRequestConfig & { guard: TypeGuardFn<T> } & Omit<SafeRequestConfig<T>, 'guard'>
+  requestConfig: AxiosRequestConfig & { guard: TypeGuardFn<T> } & Omit<
+      SafeRequestConfig<T>,
+      "guard"
+    >,
 ): Promise<ApiResult<T>> {
-  const { guard, tolerance, identifier, axiosInstance, validateResponse, timeout, ...axiosConfig } = requestConfig;
-  
+  const {
+    guard,
+    tolerance,
+    identifier,
+    axiosInstance,
+    validateResponse,
+    timeout,
+    ...axiosConfig
+  } = requestConfig;
+
   return executeRequest(axiosConfig, {
     guard,
     tolerance,
     identifier,
     axiosInstance,
     validateResponse,
-    timeout
+    timeout,
   });
 }
 
@@ -123,27 +167,27 @@ export class SafeRequestBuilder<T = unknown> {
   private axiosConfig: AxiosRequestConfig = {};
 
   get(url: string): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'GET', url };
+    this.axiosConfig = { ...this.axiosConfig, method: "GET", url };
     return this;
   }
 
   post(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'POST', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "POST", url, data };
     return this;
   }
 
   put(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'PUT', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "PUT", url, data };
     return this;
   }
 
   patch(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'PATCH', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "PATCH", url, data };
     return this;
   }
 
   delete(url: string): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'DELETE', url };
+    this.axiosConfig = { ...this.axiosConfig, method: "DELETE", url };
     return this;
   }
 
@@ -181,10 +225,15 @@ export class SafeRequestBuilder<T = unknown> {
 
   async execute(): Promise<ApiResult<T>> {
     if (!this.config.guard) {
-      throw new Error('Guard function is required. Use .guard() method to set it.');
+      throw new Error(
+        "Guard function is required. Use .guard() method to set it.",
+      );
     }
 
-    return executeRequest(this.axiosConfig, this.config as SafeRequestConfig<T>);
+    return executeRequest(
+      this.axiosConfig,
+      this.config as SafeRequestConfig<T>,
+    );
   }
 }
 
@@ -211,26 +260,82 @@ export function createSafeApiContext(contextConfig: SafeApiContextConfig = {}) {
     timeout,
     headers,
     defaultTolerance = false,
-    axiosInstance = axios.create()
+    axiosInstance = axios.create(),
   } = contextConfig;
 
   if (baseURL) axiosInstance.defaults.baseURL = baseURL;
   if (timeout) axiosInstance.defaults.timeout = timeout;
-  if (headers) axiosInstance.defaults.headers = { ...axiosInstance.defaults.headers, ...headers };
+  if (headers)
+    axiosInstance.defaults.headers = {
+      ...axiosInstance.defaults.headers,
+      ...headers,
+    };
 
   return {
-    get: <T>(url: string, config: Required<Pick<SafeRequestConfig<T>, 'guard'>> & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>) =>
-      safeGet<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })(url),
-    post: <T>(url: string, config: Required<Pick<SafeRequestConfig<T>, 'guard'>> & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>, data?: any) =>
-      safePost<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })(url, data),
-    put: <T>(url: string, config: Required<Pick<SafeRequestConfig<T>, 'guard'>> & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>, data?: any) =>
-      safePut<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })(url, data),
-    patch: <T>(url: string, config: Required<Pick<SafeRequestConfig<T>, 'guard'>> & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>, data?: any) =>
-      safePatch<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })(url, data),
-    delete: <T>(url: string, config: Required<Pick<SafeRequestConfig<T>, 'guard'>> & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>) =>
-      safeDelete<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })(url),
-    request: <T>(config: AxiosRequestConfig & { guard: TypeGuardFn<T> } & Omit<SafeRequestConfig<T>, 'axiosInstance' | 'guard'>) =>
-      safeRequest<T>({ ...config, tolerance: config.tolerance ?? defaultTolerance, axiosInstance })
+    get: <T>(
+      url: string,
+      config: Required<Pick<SafeRequestConfig<T>, "guard">> &
+        Omit<SafeRequestConfig<T>, "axiosInstance" | "guard">,
+    ) =>
+      safeGet<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      })(url),
+    post: <T>(
+      url: string,
+      config: Required<Pick<SafeRequestConfig<T>, "guard">> &
+        Omit<SafeRequestConfig<T>, "axiosInstance" | "guard">,
+      data?: any,
+    ) =>
+      safePost<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      })(url, data),
+    put: <T>(
+      url: string,
+      config: Required<Pick<SafeRequestConfig<T>, "guard">> &
+        Omit<SafeRequestConfig<T>, "axiosInstance" | "guard">,
+      data?: any,
+    ) =>
+      safePut<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      })(url, data),
+    patch: <T>(
+      url: string,
+      config: Required<Pick<SafeRequestConfig<T>, "guard">> &
+        Omit<SafeRequestConfig<T>, "axiosInstance" | "guard">,
+      data?: any,
+    ) =>
+      safePatch<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      })(url, data),
+    delete: <T>(
+      url: string,
+      config: Required<Pick<SafeRequestConfig<T>, "guard">> &
+        Omit<SafeRequestConfig<T>, "axiosInstance" | "guard">,
+    ) =>
+      safeDelete<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      })(url),
+    request: <T>(
+      config: AxiosRequestConfig & { guard: TypeGuardFn<T> } & Omit<
+          SafeRequestConfig<T>,
+          "axiosInstance" | "guard"
+        >,
+    ) =>
+      safeRequest<T>({
+        ...config,
+        tolerance: config.tolerance ?? defaultTolerance,
+        axiosInstance,
+      }),
   };
 }
 
@@ -239,7 +344,7 @@ export function createSafeApiContext(contextConfig: SafeApiContextConfig = {}) {
  */
 async function executeRequest<T>(
   axiosConfig: AxiosRequestConfig,
-  safeConfig: SafeRequestConfig<T>
+  safeConfig: SafeRequestConfig<T>,
 ): Promise<ApiResult<T>> {
   const {
     guard,
@@ -247,14 +352,17 @@ async function executeRequest<T>(
     identifier,
     axiosInstance = axios,
     validateResponse = true,
-    timeout
+    timeout,
   } = safeConfig;
 
-  const url = axiosConfig.url || '';
-  const method = axiosConfig.method || 'GET';
+  const url = axiosConfig.url || "";
+  const method = axiosConfig.method || "GET";
   const requestId = identifier || `${method} ${url}`;
 
-  const configWithHeaders = { ...axiosConfig, headers: axiosConfig.headers ?? {} };
+  const configWithHeaders = {
+    ...axiosConfig,
+    headers: axiosConfig.headers ?? {},
+  };
   try {
     // Set timeout if provided
     if (timeout) {
@@ -269,13 +377,13 @@ async function executeRequest<T>(
       return {
         status: Status.ERROR,
         code: 400, // Assuming 400 for validation errors
-        message: `Invalid response structure for ${requestId}`
+        message: `Invalid response structure for ${requestId}`,
       };
     }
 
     // Extract and validate data
     const responseData = response.data;
-    
+
     if (tolerance) {
       // Use tolerance mode - try to extract valid data even if validation fails
       const errorMessages: string[] = [];
@@ -283,21 +391,25 @@ async function executeRequest<T>(
         identifier: identifier || requestId,
         callbackOnError: (errorMessage: string) => {
           errorMessages.push(errorMessage);
-        }
+        },
       };
 
-      const validatedData = guardWithTolerance(responseData, guard, toleranceConfig);
-      
+      const validatedData = guardWithTolerance(
+        responseData,
+        guard,
+        toleranceConfig,
+      );
+
       if (errorMessages.length > 0) {
         return {
           status: Status.ERROR,
           code: 400, // Assuming 400 for validation errors
-          message: `Data validation failed for ${requestId}: ${errorMessages.join(', ')}`
+          message: `Data validation failed for ${requestId}: ${errorMessages.join(", ")}`,
         };
       } else {
         return {
           status: Status.SUCCESS,
-          data: validatedData
+          data: validatedData,
         };
       }
     } else {
@@ -307,23 +419,24 @@ async function executeRequest<T>(
         identifier: identifier || requestId,
         callbackOnError: (errorMessage: string) => {
           errorMessages.push(errorMessage);
-        }
+        },
       };
 
       if (guard(responseData, strictConfig)) {
         return {
           status: Status.SUCCESS,
-          data: responseData
+          data: responseData,
         };
       } else {
-        const errorMsg = errorMessages.length > 0 
-          ? `Data validation failed for ${requestId}: ${errorMessages.join(', ')}`
-          : `Data validation failed for ${requestId}`;
-        
+        const errorMsg =
+          errorMessages.length > 0
+            ? `Data validation failed for ${requestId}: ${errorMessages.join(", ")}`
+            : `Data validation failed for ${requestId}`;
+
         return {
           status: Status.ERROR,
           code: 400, // Assuming 400 for validation errors
-          message: errorMsg
+          message: errorMsg,
         };
       }
     }
@@ -333,13 +446,13 @@ async function executeRequest<T>(
       return {
         status: Status.ERROR,
         code: error.response?.status || 500,
-        message: error.message || 'Network Error'
+        message: error.message || "Network Error",
       };
     } else {
       return {
         status: Status.ERROR,
         code: 500, // Assuming 500 for unexpected errors
-        message: `Unexpected error for ${requestId}: ${error instanceof Error ? error.message : String(error)}`
+        message: `Unexpected error for ${requestId}: ${error instanceof Error ? error.message : String(error)}`,
       };
     }
   }
@@ -362,4 +475,4 @@ export function createTypedSafeGet<T>(guard: TypeGuardFn<T>) {
  */
 export function createTypedSafePost<T>(guard: TypeGuardFn<T>) {
   return safePost<T>({ guard });
-} 
+}

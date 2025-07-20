@@ -1,10 +1,10 @@
-import type { AxiosRequestConfig } from 'axios';
-import type { TypeGuardFn } from 'guardz';
-import type { SafeRequestConfig } from '../types/SafeRequestConfig';
-import type { SafeRequestResult } from '../types/SafeRequestResult';
-import type { ErrorContext } from '../types/ErrorContext';
-import type { RetryConfig } from '../types/RetryConfig';
-import { executeRequest } from '../internal/executeRequest';
+import type { AxiosRequestConfig } from "axios";
+import type { TypeGuardFn } from "guardz";
+import type { SafeRequestConfig } from "../types/SafeRequestConfig";
+import type { SafeRequestResult } from "../types/SafeRequestResult";
+import type { ErrorContext } from "../types/ErrorContext";
+import type { RetryConfig } from "../types/RetryConfig";
+import { executeRequest } from "../internal/executeRequest";
 
 /**
  * Pattern 3: Fluent API Builder
@@ -15,27 +15,27 @@ export class SafeRequestBuilder<T = unknown> {
   private axiosConfig: AxiosRequestConfig = {};
 
   get(url: string): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'GET', url };
+    this.axiosConfig = { ...this.axiosConfig, method: "GET", url };
     return this;
   }
 
   post(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'POST', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "POST", url, data };
     return this;
   }
 
   put(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'PUT', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "PUT", url, data };
     return this;
   }
 
   patch(url: string, data?: any): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'PATCH', url, data };
+    this.axiosConfig = { ...this.axiosConfig, method: "PATCH", url, data };
     return this;
   }
 
   delete(url: string): SafeRequestBuilder<T> {
-    this.axiosConfig = { ...this.axiosConfig, method: 'DELETE', url };
+    this.axiosConfig = { ...this.axiosConfig, method: "DELETE", url };
     return this;
   }
 
@@ -55,7 +55,9 @@ export class SafeRequestBuilder<T = unknown> {
     return this;
   }
 
-  onTypeMismatch(callback: (error: string, context: ErrorContext) => void): SafeRequestBuilder<T> {
+  onTypeMismatch(
+    callback: (error: string, context: ErrorContext) => void,
+  ): SafeRequestBuilder<T> {
     this.config.onTypeMismatch = callback;
     return this;
   }
@@ -83,9 +85,14 @@ export class SafeRequestBuilder<T = unknown> {
 
   async execute(): Promise<SafeRequestResult<T>> {
     if (!this.config.guard) {
-      throw new Error('Type guard is required. Call .guard(typeGuardFn) before .execute()');
+      throw new Error(
+        "Type guard is required. Call .guard(typeGuardFn) before .execute()",
+      );
     }
 
-    return executeRequest(this.axiosConfig, this.config as SafeRequestConfig<T>);
+    return executeRequest(
+      this.axiosConfig,
+      this.config as SafeRequestConfig<T>,
+    );
   }
-} 
+}

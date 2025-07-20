@@ -1,4 +1,4 @@
-import { SafeRequestBuilder } from '../builders/SafeRequestBuilder';
+import { SafeRequestBuilder } from "../builders/SafeRequestBuilder";
 
 /**
  * Pattern 3: Fluent API Builder factory
@@ -6,4 +6,4 @@ import { SafeRequestBuilder } from '../builders/SafeRequestBuilder';
  */
 export function safe(): SafeRequestBuilder {
   return new SafeRequestBuilder();
-} 
+}

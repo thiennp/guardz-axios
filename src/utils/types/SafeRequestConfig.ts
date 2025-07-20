@@ -1,7 +1,7 @@
-import type { AxiosInstance } from 'axios';
-import type { TypeGuardFn } from 'guardz';
-import type { ErrorContext } from './ErrorContext';
-import type { RetryConfig } from './RetryConfig';
+import type { AxiosInstance } from "axios";
+import type { TypeGuardFn } from "guardz";
+import type { ErrorContext } from "./ErrorContext";
+import type { RetryConfig } from "./RetryConfig";
 
 /**
  * Professional safe request configuration
@@ -23,4 +23,4 @@ export interface SafeRequestConfig<T> {
   retry?: RetryConfig;
   /** Timeout in milliseconds */
   timeout?: number;
-} 
+}
