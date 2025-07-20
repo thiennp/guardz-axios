@@ -1,6 +1,6 @@
 {
   "name": "guardz-axios",
-  "version": "1.4.1-1",
+  "version": "1.4.1",
   "description": "Type guards for Axios responses and errors using guardz",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
