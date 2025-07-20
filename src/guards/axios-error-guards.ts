@@ -1,4 +1,4 @@
-import { TypeGuardFn, isType, isString, isBoolean, isUndefinedOr } from 'guardz';
+import { TypeGuardFn, isType, isString, isBoolean, isUndefinedOr, isNonNullObject, isOneOf } from 'guardz';
 import { AxiosError, AxiosResponse } from 'axios';
 import { 
   AxiosErrorGuarded, 
@@ -68,8 +68,8 @@ export const isNetworkError: TypeGuardFn<NetworkError> = function (value: unknow
     return false;
   }
   
-  const networkCodes = ['ECONNABORTED', 'ENOTFOUND', 'ECONNREFUSED', 'ETIMEDOUT', 'ERR_NETWORK'];
-  return value.code !== undefined && networkCodes.includes(value.code);
+  const networkCodes = ['ECONNABORTED', 'ENOTFOUND', 'ECONNREFUSED', 'ETIMEDOUT', 'ERR_NETWORK'] as const;
+  return value.code !== undefined && isOneOf(networkCodes)(value.code);
 };
 
 /**
@@ -80,8 +80,8 @@ export const isTimeoutError: TypeGuardFn<TimeoutError> = function (value: unknow
     return false;
   }
   
-  const timeoutCodes = ['ECONNABORTED', 'ETIMEDOUT'];
-  return value.code !== undefined && timeoutCodes.includes(value.code);
+  const timeoutCodes = ['ECONNABORTED', 'ETIMEDOUT'] as const;
+  return value.code !== undefined && isOneOf(timeoutCodes)(value.code);
 };
 
 /**

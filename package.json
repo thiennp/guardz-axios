@@ -1,6 +1,6 @@
 {
   "name": "guardz-axios",
-  "version": "1.4.1-1",
+  "version": "1.7.0-1",
   "description": "Type guards for Axios responses and errors using guardz",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,13 +27,13 @@
   "homepage": "https://github.com/thiennp/guardz-axios#readme",
   "peerDependencies": {
     "axios": "^1.0.0",
-    "guardz": "^1.4.1"
+    "guardz": "^1.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
     "axios": "^1.6.0",
-    "guardz": "^1.4.1",
+    "guardz": "^1.7.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.0",
