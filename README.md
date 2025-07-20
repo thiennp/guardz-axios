@@ -1,15 +1,19 @@
 # Guardz Axios
 
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Support%20this%20project-red?style=for-the-badge&logo=github)](https://github.com/sponsors/thiennp)
+
 A type-safe HTTP client built on top of Axios with runtime validation using [guardz](https://github.com/thiennp/guardz) 1.7.0+.
 
-## Features
+## What This Library Does
 
-- **Type-safe HTTP requests** with runtime validation
-- **Multiple API patterns** for different use cases
+Guardz Axios transforms your HTTP requests into type-safe operations that automatically validate response data at runtime. Instead of manually checking response types and handling errors, you get:
+
+- **Automatic runtime validation** of all response data
+- **Type-safe results** with discriminated unions
 - **Comprehensive error handling** with detailed feedback
+- **Multiple API patterns** for different use cases
 - **Retry logic** with configurable backoff strategies
 - **Tolerance mode** for graceful degradation
-- **Zero dependencies** beyond axios and guardz
 
 ## Installation
 
@@ -56,7 +60,9 @@ if (result.status === Status.SUCCESS) {
 }
 ```
 
-## Result Type
+## How It Works
+
+### Result Type
 
 The library uses a **discriminated union** for type-safe results:
 
@@ -260,7 +266,6 @@ const result = isUser(invalidUser, config);
          // Log to monitoring service
        });
      }
-   })('/users/1');
    ```
 
 ## API Patterns
@@ -480,13 +485,17 @@ See the [examples](./examples) directory for complete working examples:
 - [Quick Demo](./examples/quick-demo.ts)
 - [Error Handling Demo](./examples/error-handling-demo.ts)
 
-## Contributing
+## Sponsors
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+Support this project by becoming a sponsor:
+
+- [GitHub Sponsors](https://github.com/thiennp)
+- [Open Collective](https://opencollective.com/guardz-axios)
+- [Ko-fi](https://ko-fi.com/nguyenphongthien)
+- [Tidelift](https://tidelift.com/funding/github/npm/guardz)
+- [Liberapay](https://liberapay.com/~1889616)
+- [IssueHunt](https://issuehunt.io/r/nguyenphongthien)
+- [Custom Sponsorship](https://github.com/thiennp/guardz-axios#sponsors)
 
 ## License
 

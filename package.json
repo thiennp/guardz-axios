@@ -21,6 +21,10 @@
   ],
   "author": "Thien Nguyen",
   "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/thiennp"
+  },
   "bugs": {
     "url": "https://github.com/thiennp/guardz-axios/issues"
   },
