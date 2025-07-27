@@ -1,6 +1,6 @@
 {
   "name": "guardz-axios",
-  "version": "1.11.3-0",
+  "version": "1.11.3",
   "description": "Type-safe HTTP client built on top of Axios with runtime validation using guardz. Part of the guardz ecosystem for comprehensive TypeScript type safety.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
